@@ -1,0 +1,40 @@
+<div class="login">
+  <form [formGroup]="loginForm">
+    <div class="login_form-field">
+      <p class="login_form-label">Email</p>
+      <input name="name-input" class="form-control" placeholder="Enter your Email" type="email" formControlName="email">
+      <mat-error *ngIf="loginForm.controls.email.touched
+                && loginForm.controls.email.errors?.required">
+        Field is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls.email.touched
+                && loginForm.controls.email.errors?.pattern">
+        Wrong email
+      </mat-error>
+    </div>
+    <div class="login_form-field">
+      <p class="login_form-label">Password</p>
+      <input name="name-input" class="form-control" placeholder="******" type="password" formControlName="password">
+      <mat-error *ngIf="loginForm.controls.password.touched
+                && loginForm.controls.password.errors?.required">
+        Field is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls.password.touched
+                && loginForm.controls.password.errors?.minlength">
+        Wrong password
+      </mat-error>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+    <div class="forget-password">
+      <input formControlName="rememberMe" [checked]="isRemembered" (change)="getRememberMeValue($event)" type="checkbox">
+      Remember password
+    </div>
+    <div class="login_cta__login">
+      <button class="btn"
+              (click)="login()"
+              [disabled]="!loginForm.valid">Login
+      </button>
+    </div>
+  </form>
+</div>
