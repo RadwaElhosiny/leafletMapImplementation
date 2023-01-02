@@ -96,7 +96,8 @@
             "styles": [
               "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           }
