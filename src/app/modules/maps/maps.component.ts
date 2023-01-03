@@ -3,6 +3,8 @@ import * as L from 'leaflet';
 import {MapService} from "../../shared/services/map/map.service";
 import {Router} from "@angular/router";
 import 'leaflet/dist/images/marker-shadow.png';
+import { Observable, of } from 'rxjs';
+import { delay, map, concatAll } from 'rxjs/operators';
 
 @Component({
   selector: 'app-maps',
@@ -28,13 +30,13 @@ export class MapsComponent implements AfterViewInit {
     }
     console.log(arrays);
   }
-  async getMapCoordinates() {
-    for (let i = 1; i < this.mapCoordinates.length; i++) {
-      this.lat = this.mapCoordinates[i].lat;
-      this.lng = this.mapCoordinates[i].lng;
-      this.layers = [ L.marker([this.lat, this.lng])];
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    }
+  getMapCoordinates(): Observable<any>{
+    const cordinates = of(...this.mapCoordinates)
+    .pipe(
+      map(x => of(x).pipe(delay(2000))),
+      concatAll()
+    )
+    return cordinates;
   }
   private initMap(): void {
 
@@ -47,7 +49,7 @@ export class MapsComponent implements AfterViewInit {
   }
 
   this.layers = [
-    L.marker([this.lat, this.lng], )];
+    L.marker([this.lat, this.lng])];
   }
 
   uniqueArrayOfCoordinates(originalArray) {
@@ -67,7 +69,11 @@ export class MapsComponent implements AfterViewInit {
       this.lat = this.mapCoordinates[0].lat;
       this.lng = this.mapCoordinates[0].lng;
       this.initMap();
-      this.getMapCoordinates().then();
+      this.getMapCoordinates().subscribe(cordinate =>{
+        this.lat = cordinate.lat;
+        this.lng = cordinate.lng;
+        this.layers = [ L.marker([this.lat, this.lng])];
+        });
     });
   }
 
