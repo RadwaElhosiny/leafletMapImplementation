@@ -3,8 +3,8 @@ import * as L from 'leaflet';
 import {MapService} from "../../shared/services/map/map.service";
 import {Router} from "@angular/router";
 import 'leaflet/dist/images/marker-shadow.png';
-import { Observable, of } from 'rxjs';
-import { delay, map, concatAll } from 'rxjs/operators';
+import { Observable, of, from } from 'rxjs';
+import { delay, map, concatAll, toArray, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-maps',
@@ -31,7 +31,7 @@ export class MapsComponent implements AfterViewInit {
     console.log(arrays);
   }
   getMapCoordinates(): Observable<any>{
-    const cordinates = of(...this.mapCoordinates)
+    const cordinates = from(this.mapCoordinates)
     .pipe(
       map(x => of(x).pipe(delay(2000))),
       concatAll()
@@ -52,19 +52,16 @@ export class MapsComponent implements AfterViewInit {
     L.marker([this.lat, this.lng])];
   }
 
-  uniqueArrayOfCoordinates(originalArray) {
-    let uniqueArr = [];
-    originalArray.filter(function(item){
-      let i = uniqueArr.findIndex(x => (x.lat == item.lat && x.lng == item.lng));
-      if(i <= -1){
-        uniqueArr.push(item);
-      }
-    });
-    return uniqueArr;
+  uniqueArrayOfCoordinates(originalArray: any){
+    const areCoordinatesEqual = (coordinate1,coordinate2):
+     boolean => coordinate1.lat === coordinate2.lat && coordinate1.lng === coordinate2.lng;
+    const uniquArray = from (originalArray).pipe(
+      distinctUntilChanged (areCoordinatesEqual), toArray());
+    return uniquArray;
   }
   ngAfterViewInit(): void {
     this.mapService.getCoordinates().subscribe(result => {
-      this.mapCoordinates = this.uniqueArrayOfCoordinates(result.coordinates);
+      this.uniqueArrayOfCoordinates(result.coordinates).subscribe(coordinates => this.mapCoordinates = coordinates)
       // setting first lat & lng to initiate the map
       this.lat = this.mapCoordinates[0].lat;
       this.lng = this.mapCoordinates[0].lng;
