@@ -22,6 +22,9 @@ export class MapsComponent implements AfterViewInit {
 
   constructor(private mapService: MapService, private router: Router) { }
 
+  getRandomDelayValues(min, max) { 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  } 
   // can use this function of number of coordinates are too big or slow the network.
   chunkCoordinatesArray() {
     let arrays = [], size = 100;
@@ -33,7 +36,7 @@ export class MapsComponent implements AfterViewInit {
   getMapCoordinates(): Observable<any>{
     const cordinates = from(this.mapCoordinates)
     .pipe(
-      map(x => of(x).pipe(delay(2000))),
+      map(x => of(x).pipe(delay(this.getRandomDelayValues(2,5)*1000))),
       concatAll()
     )
     return cordinates;
