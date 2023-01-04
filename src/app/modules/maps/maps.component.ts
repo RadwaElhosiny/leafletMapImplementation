@@ -22,6 +22,10 @@ export class MapsComponent implements AfterViewInit {
 
   constructor(private mapService: MapService, private router: Router) { }
 
+  getLocationOftheMapMarker(lat: number, lng: number) {
+    this.mapService.getLocation(lat,lng).subscribe(data => console.log((data)))
+  }
+
   getRandomDelayValues(min, max) { 
     return Math.floor(Math.random() * (max - min + 1) + min)
   } 
@@ -68,10 +72,12 @@ export class MapsComponent implements AfterViewInit {
       // setting first lat & lng to initiate the map
       this.lat = this.mapCoordinates[0].lat;
       this.lng = this.mapCoordinates[0].lng;
+      this.getLocationOftheMapMarker(this.lat, this.lng)
       this.initMap();
       this.getMapCoordinates().subscribe(cordinate =>{
         this.lat = cordinate.lat;
         this.lng = cordinate.lng;
+        this.getLocationOftheMapMarker(this.lat, this.lng)
         this.layers = [ L.marker([this.lat, this.lng])];
         });
     });

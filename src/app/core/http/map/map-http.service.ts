@@ -12,4 +12,8 @@ export class MapHttpService {
   public getCoordinates(): Observable<any> {
     return this.http.get('./assets/files/coordinates.json');
   }
+
+  public getLocation(lat: number, lng: number): Observable<any> {
+    return this.http.get(`/geocode.xyz/[${lat},${lng}]&auth=11681966129806491427x103294?json=1`);
+  }
 }

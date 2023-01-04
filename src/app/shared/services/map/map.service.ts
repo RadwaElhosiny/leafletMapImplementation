@@ -12,4 +12,8 @@ export class MapService {
   public getCoordinates(): Observable<any> {
     return this.mapHttpService.getCoordinates();
   }
+
+  public getLocation(lat: number, lng: number): Observable<any> {
+    return this.mapHttpService.getLocation(lat, lng);
+  }
 }
