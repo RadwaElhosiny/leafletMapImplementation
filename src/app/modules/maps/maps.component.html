@@ -2,11 +2,24 @@
   <button>Logout</button>
 </div>
 <div class="map-container">
-  <div class="map-frame">
-    <div *ngIf="mapOptions" style="height: 100%;"
-    leaflet 
-    [leafletOptions]= mapOptions
-    [leafletLayers]="layers">
-</div>
-  </div>
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon class="list-icon">view_headline</mat-icon>
+      </button>
+      <div class="map-frame">
+        <div *ngIf="mapOptions" style="height: 100%;"
+        leaflet 
+        [leafletOptions]= mapOptions
+        [leafletLayers]="layers">
+        </div>
+      </div>
+    </div>
+  
+  </mat-drawer-container>
+  
 </div>

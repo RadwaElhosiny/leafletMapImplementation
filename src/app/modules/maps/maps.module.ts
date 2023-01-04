@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MapsRoutingModule } from './maps-routing.module';
 import { MapsComponent } from './maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   imports: [
     CommonModule,
     MapsRoutingModule,
-    LeafletModule
+    LeafletModule,
+    MatSidenavModule,
+    MatIconModule
   ]
 })
 export class MapsModule { }
