@@ -18,6 +18,7 @@ export class MapsComponent implements AfterViewInit {
   lng;
   mapOptions;
   layers;
+  markerOptions
   
 
   constructor(private mapService: MapService, private router: Router) { }
@@ -55,8 +56,20 @@ export class MapsComponent implements AfterViewInit {
     center: L.latLng(this.lat,this.lng)
   }
 
+  var customIcon = L.icon({
+    iconUrl: 'assets/images/marker-icon.png',
+    className: 'custom'
+ });
+  this.markerOptions = {
+    title: "MyLocation",
+    clickable: true,
+    draggable: true,
+    icon: customIcon
+  
+ }
+
   this.layers = [
-    L.marker([this.lat, this.lng])];
+    L.marker([this.lat, this.lng], this.markerOptions)];
   }
 
   uniqueArrayOfCoordinates(originalArray: any){
@@ -78,7 +91,7 @@ export class MapsComponent implements AfterViewInit {
         this.lat = cordinate.lat;
         this.lng = cordinate.lng;
         this.getLocationOftheMapMarker(this.lat, this.lng)
-        this.layers = [ L.marker([this.lat, this.lng])];
+        this.layers = [ L.marker([this.lat, this.lng], this.markerOptions)];
         });
     });
   }
