@@ -4,7 +4,13 @@
 <div class="map-container">
   <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
+      <div class="panel-head">Location Details:</div>
+      <div *ngFor="let location of locationsArray">
+         <p>Country: {{location.standard.countryname}}</p>
+         <p>Lat: {{location.latt}}</p>
+         <p>Lng: {{location.longt}}</p>
+         <hr>
+      </div>
     </mat-drawer>
   
     <div class="example-sidenav-content">

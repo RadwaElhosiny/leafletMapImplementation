@@ -18,13 +18,16 @@ export class MapsComponent implements AfterViewInit {
   lng;
   mapOptions;
   layers;
-  markerOptions
+  markerOptions;
+  locationsArray = [];
   
 
   constructor(private mapService: MapService, private router: Router) { }
 
   getLocationOftheMapMarker(lat: number, lng: number) {
-    this.mapService.getLocation(lat,lng).subscribe(data => console.log((data)))
+    this.mapService.getLocation(lat,lng).subscribe(location => {
+      this.locationsArray.push(location);
+    })
   }
 
   getRandomDelayValues(min, max) { 
@@ -38,6 +41,7 @@ export class MapsComponent implements AfterViewInit {
     }
     console.log(arrays);
   }
+  
   getMapCoordinates(): Observable<any>{
     const cordinates = from(this.mapCoordinates)
     .pipe(
@@ -46,13 +50,14 @@ export class MapsComponent implements AfterViewInit {
     )
     return cordinates;
   }
+
   private initMap(): void {
 
     this.mapOptions = {
       layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
     ],
-    zoom: 10,
+    zoom: 15,
     center: L.latLng(this.lat,this.lng)
   }
 

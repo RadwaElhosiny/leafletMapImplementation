@@ -32,6 +32,7 @@
 
 ::ng-deep .custom {
   transition-timing-function: linear;
+  transition-property: transform;
 }
 
 .example-container {
@@ -55,4 +56,9 @@
 
 .example-sidenav {
   padding: 20px;
+  .panel-head {
+    font-size: 16px;
+    margin-bottom: 22px;
+    color: wheat;
+  }
 }
