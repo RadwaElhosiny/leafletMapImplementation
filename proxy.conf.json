@@ -1,0 +1,8 @@
+{
+  "/geocode/*": {
+    "target": "https://geocode.xyz",
+    "secure": false,
+    "loglevel": "debug",
+    "changeOrigin": true
+  }
+}
