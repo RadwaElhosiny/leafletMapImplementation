@@ -4,7 +4,7 @@ import {MapService} from "../../shared/services/map/map.service";
 import {Router} from "@angular/router";
 import 'leaflet/dist/images/marker-shadow.png';
 import { Observable, of, from } from 'rxjs';
-import { delay, map, concatAll, toArray, distinctUntilChanged } from 'rxjs/operators';
+import { delay, map, concatAll, toArray, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-maps',
@@ -26,7 +26,9 @@ export class MapsComponent implements AfterViewInit {
 
   getLocationOftheMapMarker(lat: number, lng: number) {
     this.mapService.getLocation(lat,lng).subscribe(location => {
-      this.locationsArray.push(location);
+      if (location.latt) {
+        this.locationsArray.push(location);
+      }
     })
   }
 
@@ -43,7 +45,7 @@ export class MapsComponent implements AfterViewInit {
   }
   
   getMapCoordinates(): Observable<any>{
-    const cordinates = from(this.mapCoordinates)
+    const cordinates = from(this.mapCoordinates).pipe(filter((val, index) => index % 2 == 0))
     .pipe(
       map(x => of(x).pipe(delay(this.getRandomDelayValues(2,5)*1000))),
       concatAll()
