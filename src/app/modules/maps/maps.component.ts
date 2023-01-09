@@ -98,7 +98,7 @@ export class MapsComponent implements AfterViewInit {
         this.lat = cordinate.lat;
         this.lng = cordinate.lng;
         this.getLocationOftheMapMarker(this.lat, this.lng)
-        this.layers = [ L.marker([this.lat, this.lng], this.markerOptions)];
+        this.layers[0].setLatLng([this.lat, this.lng]);
         });
     });
   }

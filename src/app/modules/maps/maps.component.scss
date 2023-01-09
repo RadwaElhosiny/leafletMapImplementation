@@ -31,8 +31,7 @@
 }
 
 ::ng-deep .custom {
-  transition-timing-function: linear;
-  transition-property: transform;
+  transition: transform 1s linear;
 }
 
 .example-container {
