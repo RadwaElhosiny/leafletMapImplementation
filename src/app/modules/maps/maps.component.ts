@@ -45,7 +45,7 @@ export class MapsComponent implements AfterViewInit {
   }
   
   getMapCoordinates(): Observable<any>{
-    const cordinates = from(this.mapCoordinates).pipe(filter((val, index) => index % 2 == 0))
+    const cordinates = from(this.mapCoordinates).pipe(filter((val, index) => index % 10 == 0))
     .pipe(
       map(x => of(x).pipe(delay(this.getRandomDelayValues(2,5)*1000))),
       concatAll()
